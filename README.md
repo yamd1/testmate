@@ -1,4 +1,4 @@
-# testp
+# testmate
 Given an implementation file name as standard input, outputs the corresponding test file name (or vice versa) to standard output.
 Later, this will be called from Neovim/Lua to open the corresponding test file next to the buffer [currently](currently.md) opened with the implementation (or test) file.
 
