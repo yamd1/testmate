@@ -1,6 +1,5 @@
-use std::{collections::HashSet, env, error::Error, fs, path::PathBuf};
-
 use regex::Regex;
+use std::{collections::HashSet, env, error::Error, ffi::OsStr, fs, path::PathBuf};
 use testmate::TestDirectoryName;
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -11,9 +10,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     let test_file_list = get_test_file_list(&cwd, search_target_test_dir);
 
     let re = Regex::new(&format!(
-        r"{}(?P<test_file_suffix>_test|Test|_Test|\.spec)\.{}$",
+        r"{}(?P<test_file_suffix>_test|Test|_Test|\.spec)(?:\.)?{}$",
         &parsed_input.file.file_stem().unwrap().to_string_lossy(),
-        &parsed_input.file.extension().unwrap().to_string_lossy()
+        &parsed_input
+            .file
+            .extension()
+            .unwrap_or(OsStr::new(""))
+            .to_string_lossy()
     ))
     .unwrap();
 
