@@ -34,17 +34,17 @@ fn handle_output(matching_test_file_list: Vec<PathBuf>) -> () {
     match matching_test_file_list.len() {
         0 => {
             // TODO: touchフラグに応じてテストファイルを作成できるように
-            eprintln!("{}", "Test file not found");
+            eprint!("{}", "Test file not found");
             ()
         }
         1 => {
-            println!(
+            print!(
                 "{}",
                 matching_test_file_list.first().unwrap().to_string_lossy()
             );
         }
         _ => {
-            eprintln!("{}", "Find files too much");
+            eprint!("{}", "Find files too much");
         }
     }
 }
@@ -69,7 +69,7 @@ fn set_test_dir(input_test_dir: TestDirectoryName) -> HashSet<String> {
     let default_search_dir = "tests".to_string();
     let mut search_target_dir = HashSet::new();
     search_target_dir.insert(default_search_dir); // TODO: default値を設定できるように
-    search_target_dir.insert(input_test_dir);
+    input_test_dir.map(|v| search_target_dir.insert(v));
 
     search_target_dir
 }

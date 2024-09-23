@@ -6,7 +6,7 @@ use std::{
 };
 
 type ParseResult<T> = Result<T, Box<dyn Error>>;
-pub type TestDirectoryName = String;
+pub type TestDirectoryName = Option<String>;
 
 #[derive(Debug, Clone)]
 pub struct Input {
@@ -29,10 +29,7 @@ pub fn get_args() -> ParseResult<Input> {
         )
         .get_matches();
 
-    let test_dir = matches
-        .get_one::<String>("target")
-        .ok_or_else(|| Box::<dyn Error>::from("test_dir is missing"))?
-        .to_string();
+    let test_dir = matches.get_one::<String>("target").map(|v| v.to_owned());
 
     Ok(Input {
         file: parse_file_name()?,
