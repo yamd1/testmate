@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      # - labeled
+      # - unlabeled
+
+permissions:
+  contents: read
+  id-token: write # For aws-actions/configure-aws-credentials
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-22.04
+    steps:
+      - name: echo
+        run: |
+          echo test://${{ (github.ref_name == 'main' && 'dev.') }}${{ github.sha }}
